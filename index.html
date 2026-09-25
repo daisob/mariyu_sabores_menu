@@ -198,17 +198,17 @@
             cookies: [
                 {
                     id: 1,
-                    name: "Cookie New York",
-                    price: "2.200",
-                    description: "Gigante con trozos de chocolate semi-amargo y nueces.",
-                    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=400&q=80"
+                    name: "Cookie Frutos Rojos",
+                    price: "4.000",
+                    description: "Cookie de vainilla, con un centro de reduccionde frutos rojos y decoración de chocolate blanco.",
+                    image: "cookie_frutos_rojos.png"
                 },
                 {
                     id: 2,
                     name: "Cookie Rellena DL",
                     price: "2.500",
                     description: "Base de vainilla con corazón de dulce de leche y baño.",
-                    image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80"
+                    image: "cookie_nutella.png"
                 },
                 {
                     id: 3,
@@ -306,19 +306,19 @@
                         <div class="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-purple-50 border border-purple-100">
                             <img src="${imgSrc}" alt="${prod.name}" class="w-full h-full object-cover" onerror="this.src='${placeholderImg}'">
                         </div>
+                        
                         <div class="flex-grow min-w-0">
                             <div class="flex items-start justify-between gap-1">
                                 <h3 class="font-serif text-sm sm:text-base font-bold text-darkPrimary truncate">${prod.name}</h3>
                                 <span class="text-xs sm:text-sm font-bold text-primary whitespace-nowrap bg-purple-50 px-2 py-0.5 rounded-md">$${prod.price}</span>
                             </div>
-                            <p class="text-gray-600 text-[11px] sm:text-xs leading-snug mt-1 line-clamp-2">${prod.description}</p>
+                           <p class="text-gray-600 text-[11px] sm:text-xs leading-snug mt-1 line-clamp-2">${prod.description}</p>
                             <div class="mt-2 flex items-center justify-between">
-                                <span class="text-[10px] text-gray-400 font-medium">Casero</span>
+                                
                                 <button onclick="selectItem('${prod.name}', '${prod.price}')" class="text-[10px] bg-purple-50 text-primary hover:bg-primary hover:text-white px-2.5 py-1 rounded-md font-semibold transition">
-                                    Pedir <i class="fa-solid fa-chevron-right text-[8px]"></i>
-                                </button>
                             </div>
-                        </div>
+                        </div> 
+
                     `;
                     grid.appendChild(card);
                 });
