@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariyu Sabores - Menú Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#715cc8',
+                        darkPrimary: '#3c1856',
+                        accent: '#dc8bf3',
+                        lightBg: '#f9f6fc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f6fc;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-gray-800">
+
+    <!-- Header / Banner de la Pastelería -->
+    <header class="bg-gradient-to-r from-darkPrimary via-primary to-[#8b6fe2] text-white shadow-md relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-3xl mx-auto px-4 py-6 text-center relative z-10">
+            <div class="w-16 h-16 mx-auto mb-2 bg-white/10 rounded-full flex items-center justify-center border-2 border-accent shadow-inner backdrop-blur-sm">
+                <i class="fa-solid fa-cake-candles text-2xl text-accent"></i>
+            </div>
+            <h1 class="font-serif text-3xl md:text-4xl font-bold tracking-wide text-white drop-shadow-sm">Mariyu Sabores</h1>
+            <p class="text-accent text-xs md:text-sm font-medium mt-0.5 tracking-wider uppercase">Pastelería Artesanal & Café</p>
+        </div>
+    </header>
+
+    <!-- Navegación por Categorías (Pestañas estilo carta) -->
+    <nav class="sticky top-0 z-30 bg-white/95 backdrop-blur-md shadow-sm border-b border-purple-100">
+        <div class="max-w-3xl mx-auto px-4 flex justify-center overflow-x-auto no-scrollbar py-2.5 gap-2">
+            <button onclick="switchCategory('cookies')" id="btn-cookies" class="category-btn px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 shadow-sm bg-primary text-white scale-105">
+                <i class="fa-solid fa-cookie-bite"></i> Cookies
+            </button>
+            <button onclick="switchCategory('brownies')" id="btn-brownies" class="category-btn px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 bg-gray-100 text-gray-600 hover:bg-purple-50 hover:text-primary">
+                <i class="fa-solid fa-square text-xs"></i> Brownies
+            </button>
+            <button onclick="switchCategory('tortas')" id="btn-tortas" class="category-btn px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 bg-gray-100 text-gray-600 hover:bg-purple-50 hover:text-primary">
+                <i class="fa-solid fa-birthday-cake"></i> Tortas
+            </button>
+            <!-- Botón para administrar productos -->
+            <button onclick="openAdminModal()" class="px-3 py-2 rounded-full text-xs md:text-sm font-semibold bg-darkPrimary text-accent hover:bg-black transition-all flex items-center gap-1 shadow-sm ml-1">
+                <i class="fa-solid fa-gear"></i> Editar
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal (Carta compacta: 2 elementos por línea) -->
+    <main class="max-w-3xl mx-auto px-4 py-6 flex-grow w-full">
+        
+        <!-- Categoría: Cookies -->
+        <div id="section-cookies" class="category-section fade-in">
+            <div class="flex items-center justify-between mb-4 border-b border-purple-100 pb-2">
+                <h2 class="font-serif text-xl md:text-2xl font-bold text-darkPrimary flex items-center gap-2">
+                    <span class="text-primary"><i class="fa-solid fa-cookie-bite"></i></span> Cookies
+                </h2>
+                <span class="text-[11px] font-semibold uppercase tracking-wider bg-purple-100 text-primary px-2.5 py-0.5 rounded-full">Carta</span>
+            </div>
+            <div id="grid-cookies" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Se inyecta dinámicamente con JS -->
+            </div>
+        </div>
+
+        <!-- Categoría: Brownies -->
+        <div id="section-brownies" class="category-section hidden fade-in">
+            <div class="flex items-center justify-between mb-4 border-b border-purple-100 pb-2">
+                <h2 class="font-serif text-xl md:text-2xl font-bold text-darkPrimary flex items-center gap-2">
+                    <span class="text-primary"><i class="fa-solid fa-square"></i></span> Brownies
+                </h2>
+                <span class="text-[11px] font-semibold uppercase tracking-wider bg-purple-100 text-primary px-2.5 py-0.5 rounded-full">Carta</span>
+            </div>
+            <div id="grid-brownies" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Se inyecta dinámicamente con JS -->
+            </div>
+        </div>
+
+        <!-- Categoría: Tortas -->
+        <div id="section-tortas" class="category-section hidden fade-in">
+            <div class="flex items-center justify-between mb-4 border-b border-purple-100 pb-2">
+                <h2 class="font-serif text-xl md:text-2xl font-bold text-darkPrimary flex items-center gap-2">
+                    <span class="text-primary"><i class="fa-solid fa-birthday-cake"></i></span> Tortas
+                </h2>
+                <span class="text-[11px] font-semibold uppercase tracking-wider bg-purple-100 text-primary px-2.5 py-0.5 rounded-full">Carta</span>
+            </div>
+            <div id="grid-tortas" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Se inyecta dinámicamente con JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal Administrador -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-purple-100 transform transition-all">
+            <div class="bg-darkPrimary text-white px-5 py-3.5 flex justify-between items-center">
+                <h3 class="font-serif text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-accent"></i> Administrar Menú</h3>
+                <button onclick="closeAdminModal()" class="text-gray-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-5 max-h-[75vh] overflow-y-auto">
+                <p class="text-xs text-gray-600 mb-3">Agrega o administra los productos de tu carta:</p>
+                
+                <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-3 text-xs">
+                    <div>
+                        <label class="block font-semibold text-gray-700 uppercase mb-1">Categoría</label>
+                        <select id="form-category" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+                            <option value="cookies">Cookies</option>
+                            <option value="brownies">Brownies</option>
+                            <option value="tortas">Tortas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 uppercase mb-1">Nombre</label>
+                        <input type="text" id="form-name" required placeholder="Ej. Cookie Rellena" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 uppercase mb-1">Precio ($)</label>
+                        <input type="number" id="form-price" required placeholder="Ej. 2500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 uppercase mb-1">Descripción corta</label>
+                        <textarea id="form-desc" rows="2" required placeholder="Breve detalle..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 uppercase mb-1">URL de la Foto (Opcional)</label>
+                        <input type="url" id="form-image" placeholder="https://..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+                    <div class="pt-1 flex gap-2">
+                        <button type="submit" class="flex-1 bg-primary text-white font-semibold py-2 rounded-lg hover:bg-darkPrimary transition shadow">Guardar</button>
+                        <button type="button" onclick="closeAdminModal()" class="bg-gray-100 text-gray-700 font-semibold px-3 py-2 rounded-lg hover:bg-gray-200 transition">Cancelar</button>
+                    </div>
+                </form>
+
+                <div class="mt-6 border-t pt-3">
+                    <h4 class="text-xs font-bold text-gray-700 mb-2">Productos actuales:</h4>
+                    <div id="admin-product-list" class="space-y-1.5 max-h-36 overflow-y-auto">
+                        <!-- Listado -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-darkPrimary text-white py-4 mt-8 border-t border-accent/30 text-xs">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <p class="font-serif font-bold text-accent">Mariyu Sabores</p>
+            <p class="text-[11px] text-gray-300 mt-0.5">Hecho casero con amor.</p>
+        </div>
+    </footer>
+
+    <!-- Script de lógica -->
+    <script>
+        let menuData = {
+            cookies: [
+                {
+                    id: 1,
+                    name: "Cookie New York",
+                    price: "2.200",
+                    description: "Gigante con trozos de chocolate semi-amargo y nueces.",
+                    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=400&q=80"
+                },
+                {
+                    id: 2,
+                    name: "Cookie Rellena DL",
+                    price: "2.500",
+                    description: "Base de vainilla con corazón de dulce de leche y baño.",
+                    image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80"
+                },
+                {
+                    id: 3,
+                    name: "Red Velvet & Cream",
+                    price: "2.400",
+                    description: "Sabor cacao suave con centro de frosting de queso.",
+                    image: "https://images.unsplash.com/photo-1618923859007-b99a65249a4f?auto=format&fit=crop&w=400&q=80"
+                },
+                {
+                    id: 4,
+                    name: "Cookie Chip Clásica",
+                    price: "1.900",
+                    description: "Tradicional crujiente por fuera y suave por dentro.",
+                    image: "https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=400&q=80"
+                }
+            ],
+            brownies: [
+                {
+                    id: 5,
+                    name: "Brownie Clásico Húmedo",
+                    price: "2.800",
+                    description: "Extremadamente húmedo con costra crujiente de cacao.",
+                    image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&q=80"
+                },
+                {
+                    id: 6,
+                    name: "Brownie con Merengue",
+                    price: "3.200",
+                    description: "Cubierto de dulce de leche y copitos de merengue tostado.",
+                    image: "https://images.unsplash.com/photo-1514517521153-1be72277b32f?auto=format&fit=crop&w=400&q=80"
+                }
+            ],
+            tortas: [
+                {
+                    id: 7,
+                    name: "Chocotorta",
+                    price: "12.500",
+                    description: "Chocolinas, dulce de leche repostero y queso crema.",
+                    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80"
+                },
+                {
+                    id: 8,
+                    name: "Torta Oreo Supreme",
+                    price: "14.000",
+                    description: "Base crocante, crema chantilly y ganache de chocolate.",
+                    image: "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=400&q=80"
+                },
+                {
+                    id: 9,
+                    name: "Lemon Pie",
+                    price: "11.000",
+                    description: "Masa sablée, crema de limón natural y merengue.",
+                    image: "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=400&q=80"
+                }
+            ]
+        };
+
+        function switchCategory(category) {
+            document.querySelectorAll('.category-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white', 'scale-105', 'shadow-sm');
+                btn.classList.add('bg-gray-100', 'text-gray-600');
+            });
+
+            const activeSection = document.getElementById(`section-${category}`);
+            if (activeSection) activeSection.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-gray-100', 'text-gray-600');
+                activeBtn.classList.add('bg-primary', 'text-white', 'scale-105', 'shadow-sm');
+            }
+        }
+
+        function renderMenu() {
+            Object.keys(menuData).forEach(cat => {
+                const grid = document.getElementById(`grid-${cat}`);
+                if (!grid) return;
+                
+                grid.innerHTML = '';
+                
+                if (menuData[cat].length === 0) {
+                    grid.innerHTML = `<div class="col-span-2 text-center py-6 text-gray-400 text-xs italic">No hay productos en esta sección.</div>`;
+                    return;
+                }
+
+                menuData[cat].forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-xl shadow-xs hover:shadow-md transition duration-200 border border-purple-50 p-3 flex gap-3 items-center";
+                    
+                    const placeholderImg = `https://placehold.co/200x200/715cc8/ffffff?text=${encodeURIComponent(prod.name)}`;
+                    const imgSrc = prod.image && prod.image.trim() !== '' ? prod.image : placeholderImg;
+
+                    card.innerHTML = `
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-purple-50 border border-purple-100">
+                            <img src="${imgSrc}" alt="${prod.name}" class="w-full h-full object-cover" onerror="this.src='${placeholderImg}'">
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <div class="flex items-start justify-between gap-1">
+                                <h3 class="font-serif text-sm sm:text-base font-bold text-darkPrimary truncate">${prod.name}</h3>
+                                <span class="text-xs sm:text-sm font-bold text-primary whitespace-nowrap bg-purple-50 px-2 py-0.5 rounded-md">$${prod.price}</span>
+                            </div>
+                            <p class="text-gray-600 text-[11px] sm:text-xs leading-snug mt-1 line-clamp-2">${prod.description}</p>
+                            <div class="mt-2 flex items-center justify-between">
+                                <span class="text-[10px] text-gray-400 font-medium">Casero</span>
+                                <button onclick="selectItem('${prod.name}', '${prod.price}')" class="text-[10px] bg-purple-50 text-primary hover:bg-primary hover:text-white px-2.5 py-1 rounded-md font-semibold transition">
+                                    Pedir <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+            renderAdminList();
+        }
+
+        function selectItem(name, price) {
+            showNotification(`¡Seleccionaste: ${name} ($${price})!`);
+        }
+
+        function showNotification(msg) {
+            const existing = document.getElementById('toast-notification');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.id = 'toast-notification';
+            toast.className = 'fixed bottom-4 right-4 z-50 bg-darkPrimary text-accent px-3.5 py-2.5 rounded-xl shadow-xl border border-accent/30 text-xs font-semibold flex items-center gap-2 fade-in';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i> ${msg}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => { toast.remove(); }, 2500);
+        }
+
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+            renderAdminList();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const category = document.getElementById('form-category').value;
+            const name = document.getElementById('form-name').value;
+            const price = document.getElementById('form-price').value;
+            const description = document.getElementById('form-desc').value;
+            const image = document.getElementById('form-image').value;
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                price,
+                description,
+                image
+            };
+
+            if (!menuData[category]) menuData[category] = [];
+            menuData[category].push(newProduct);
+
+            renderMenu();
+            document.getElementById('product-form').reset();
+            showNotification('¡Producto agregado con éxito!');
+        }
+
+        function renderAdminList() {
+            const listContainer = document.getElementById('admin-product-list');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+
+            let totalCount = 0;
+            Object.keys(menuData).forEach(cat => {
+                menuData[cat].forEach(prod => {
+                    totalCount++;
+                    const item = document.createElement('div');
+                    item.className = "flex items-center justify-between bg-gray-50 p-2 rounded-lg border text-[11px]";
+                    item.innerHTML = `
+                        <div class="truncate pr-2">
+                            <span class="font-bold text-darkPrimary uppercase text-[9px] bg-purple-100 px-1 py-0.5 rounded mr-1">${cat}</span>
+                            <span class="font-semibold text-gray-800">${prod.name}</span> - $${prod.price}
+                        </div>
+                        <button onclick="deleteProduct('${cat}', ${prod.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash-can"></i></button>
+                    `;
+                    listContainer.appendChild(item);
+                });
+            });
+
+            if (totalCount === 0) {
+                listContainer.innerHTML = `<p class="text-[11px] text-gray-400 italic">No hay productos cargados.</p>`;
+            }
+        }
+
+        function deleteProduct(cat, id) {
+            menuData[cat] = menuData[cat].filter(p => p.id !== id);
+            renderMenu();
+            showNotification('Producto eliminado.');
+        }
+
+        window.onload = function() {
+            renderMenu();
+        };
+    </script>
+</body>
+</html>
