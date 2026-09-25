@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariyu Sabores - Menú y Precios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #715cc8;
+            --dark: #3c1856;
+            --accent: #dc8bf3;
+            --bg-light: #fdfbff;
+            --text-color: #2c2c2c;
+            --white: #ffffff;
+            --gray: #777777;
+            --border-color: #eee0f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: var(--white);
+            text-align: center;
+            padding: 35px 20px;
+            box-shadow: 0 4px 15px rgba(114, 92, 200, 0.2);
+            border-bottom: 4px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Pestañas de Navegación */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(113, 92, 200, 0.3);
+        }
+
+        /* Sección de Categorías */
+        .menu-section {
+            display: none;
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Cuadrícula de 2 columnas tipo cafetería */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .menu-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 3px 10px rgba(60, 24, 86, 0.04);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .item-img {
+            width: 75px;
+            height: 75px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background-color: #f3eafa;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .item-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .item-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .item-desc {
+            font-size: 0.82rem;
+            color: var(--gray);
+            line-height: 1.3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mariyu Sabores</h1>
+        <p>Menú de Pastelería Artesanal</p>
+    </header>
+
+    <div class="container">
+        <!-- Botones de pestañas -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('cookies')">🍪 Cookies</button>
+            <button class="tab-btn" onclick="switchTab('brownies')">🍫 Brownies</button>
+            <button class="tab-btn" onclick="switchTab('tortas')">🎂 Tortas</button>
+        </div>
+
+        <!-- SECCIÓN COOKIES -->
+        <div id="cookies" class="menu-section active">
+            <h2 class="section-title">Cookies</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=300" alt="Cookie con Chispas" class="item-img">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <span class="item-name">Cookie con Chispas</span>
+                            <span class="item-price">$1.800</span>
+                        </div>
+                        <p class="item-desc">Clásica cookie americana con abundantes chips de chocolate semi-amargo.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300" alt="Cookie Red Velvet" class="item-img">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <span class="item-name">Cookie Red Velvet</span>
+                            <span class="item-price">$2.100</span>
+                        </div>
+                        <p class="item-desc">Masa suave de red velvet rellena con corazón de chocolate blanco.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN BROWNIES -->
+        <div id="brownies" class="menu-section">
+            <h2 class="section-title">Brownies</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=300" alt="Brownie Clásico" class="item-img">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <span class="item-name">Brownie Húmedo</span>
+                            <span class="item-price">$2.500</span>
+                        </div>
+                        <p class="item-desc">Súper húmedo por dentro, con costra crujiente y cacao amargo de primera.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1514517521153-1be72277b32f?w=300" alt="Brownie con Dulce de Leche" class="item-img">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <span class="item-name">Brownie c/ Dulce de Leche</span>
+                            <span class="item-price">$2.900</span>
+                        </div>
+                        <p class="item-desc">Nuestra base húmeda cubierta con abundante dulce de leche repostero y lluvia de nueces.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN TORTAS -->
+        <div id="tortas" class="menu-section">
+            <h2 class="section-title">Tortas</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300" alt="Torta Chocotorta" class="item-img">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <span class="item-name">Chocotorta Clásica</span>
+                            <span class="item-price">$12.000</span>
+                        </div>
+                        <p class="item-desc">El clásico argentino con chocolinas humectadas en chocolatada y mezcla suave de dulce de leche y queso crema.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=300" alt="Cheesecake de Frutos Rojos" class="item-img">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <span class="item-name">Cheesecake Frutos Rojos</span>
+                            <span class="item-price">$14.500</span>
+                        </div>
+                        <p class="item-desc">Base crujiente de galletitas, suave crema de queso y cobertura artesanal de frutos rojos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Mariyu Sabores • Hacé tu pedido por mensaje directo</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchTab(category) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.menu-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Quitar clase active a todos los botones
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Mostrar la sección seleccionada y activar su botón
+            document.getElementById(category).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
